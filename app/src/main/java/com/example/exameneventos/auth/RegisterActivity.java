@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnRegister;
+    private TextView tvGoToLogin;
     private FirebaseAuth mAuth;
 
     @Override
@@ -30,19 +32,24 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmailRegister);
         etPassword = findViewById(R.id.etPasswordRegister);
         btnRegister = findViewById(R.id.btnRegister);
+        tvGoToLogin = findViewById(R.id.tvGoToLogin);
+
+        tvGoToLogin.setOnClickListener(v -> {
+            finish();
+        });
 
         btnRegister.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (!isValidPassword(password)) {
                 Toast.makeText(RegisterActivity.this,
-                        "Password must be >8 chars, contain A-Z, a-z and 0-9",
+                        "La contraseña debe tener: min 8 caracteres, 1 Mayúscula, 1 minúscula y 1 número.",
                         Toast.LENGTH_LONG).show();
                 return;
             }
@@ -60,11 +67,13 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(RegisterActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        Toast.makeText(RegisterActivity.this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Registration failed: " + task.getException().getMessage(),
+                        Toast.makeText(RegisterActivity.this, "Error en registro: " + task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
