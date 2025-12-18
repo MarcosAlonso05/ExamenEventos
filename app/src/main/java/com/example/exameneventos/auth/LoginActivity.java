@@ -53,11 +53,17 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Welcome back!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "¡Bienvenido de nuevo!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                        etPassword.setError("Credenciales incorrectas");
+                        etPassword.requestFocus();
+
+                        Toast.makeText(LoginActivity.this,
+                                "Error: El correo o la contraseña no son correctos.",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
     }

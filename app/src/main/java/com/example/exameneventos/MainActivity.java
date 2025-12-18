@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         movieListManager.checkAndPreloadData();
 
         rvMovies = findViewById(R.id.rvMovies);
-        boolean isGridMode = menuManager.loadGridPreference(); // Ask menu manager for the pref
+        boolean isGridMode = menuManager.loadGridPreference();
         movieListManager.setupRecyclerView(rvMovies, isGridMode);
     }
 

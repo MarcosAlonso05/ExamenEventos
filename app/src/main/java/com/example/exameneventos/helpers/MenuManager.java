@@ -45,7 +45,7 @@ public class MenuManager {
 
     private void showViewModeDialog() {
         String[] options = {"List View (Image + Text)", "Grid View (Image Only)"};
-        boolean isGridMode = loadGridPreference(); // Helper method below
+        boolean isGridMode = loadGridPreference();
         int checkedItem = isGridMode ? 1 : 0;
 
         new AlertDialog.Builder(activity)

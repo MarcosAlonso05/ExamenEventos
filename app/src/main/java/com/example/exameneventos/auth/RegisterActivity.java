@@ -48,9 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if (!isValidPassword(password)) {
+                etPassword.setError("Faltan requisitos: Mín 8 chars, 1 Mayús, 1 Minús, 1 Num");
+                etPassword.requestFocus();
+
                 Toast.makeText(RegisterActivity.this,
-                        "La contraseña debe tener: min 8 caracteres, 1 Mayúscula, 1 minúscula y 1 número.",
+                        "La contraseña es débil. Debe incluir mayúsculas, minúsculas y números.",
                         Toast.LENGTH_LONG).show();
+
                 return;
             }
 
